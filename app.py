@@ -18,7 +18,7 @@ def root():
 
 @app.route("/api/cupcakes")
 def list_cupcakes():
-    cupcakes = [cupcake.to_dict() for cupcake in Cupcake.query.all()]
+    cupcakes = [cupcake.ser_to_dict() for cupcake in Cupcake.query.all()]
     return jsonify(cupcakes=cupcakes)
 
 
@@ -35,13 +35,13 @@ def create_cupcake():
 
     databs.session.add(cupcake)
     databs.session.commit()
-    return (jsonify(cupcake=cupcake.to_dict()), 201)
+    return (jsonify(cupcake=cupcake.ser_to_dict()), 201)
 
 
 @app.route("/api/cupcakes/<int:cupcake_id>")
 def get_cupcake(cupcake_id):
     cupcake = Cupcake.query.get_or_404(cupcake_id)
-    return jsonify(cupcake=cupcake.to_dict())
+    return jsonify(cupcake=cupcake.ser_to_dict())
 
 
 @app.route("/api/cupcakes/<int:cupcake_id>", methods=["PATCH"])
@@ -58,7 +58,7 @@ def update_cupcake(cupcake_id):
     databs.session.add(cupcake)
     databs.session.commit()
 
-    return jsonify(cupcake=cupcake.to_dict())
+    return jsonify(cupcake=cupcake.ser_to_dict())
 
 
 @app.route("/api/cupcakes/<int:cupcake_id>", methods=["DELETE"])
